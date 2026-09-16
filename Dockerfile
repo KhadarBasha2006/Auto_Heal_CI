@@ -29,6 +29,9 @@ WORKDIR /app
 
 COPY backend/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
+# Optional local-agent backend. The Render service can select it with
+# HEALER_BACKEND=openhands and connect it to a remote model endpoint.
+RUN pip install --no-cache-dir openhands-ai==0.37.0
 
 COPY backend/ ./backend/
 COPY --from=frontend /build/dist ./frontend/dist

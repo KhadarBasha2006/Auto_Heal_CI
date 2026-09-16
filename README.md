@@ -115,6 +115,24 @@ $env:HEALER_BACKEND="openhands"
 python backend/run.py
 ```
 
+### OpenHands on Render
+
+The Docker image installs `openhands-ai` and includes the `openhands` command.
+Render cannot reach Ollama running on your personal computer, so OpenHands on
+Render needs a remotely reachable model endpoint. In the Render service
+environment, set:
+
+```text
+HEALER_BACKEND=openhands
+LOCAL_LLM_BASE_URL=https://your-remote-openai-compatible-host/v1
+LOCAL_LLM_MODEL=your-coding-model
+LOCAL_LLM_API_KEY=<set as a private Render secret>
+```
+
+Then deploy the latest commit. Keep `HEALER_BACKEND=anthropic` if no remote
+model endpoint is configured; otherwise OpenHands will be installed but cannot
+complete model-assisted repairs.
+
 The local agent edits the checkout, then the normal scanner and validation loop
 must confirm that the defect count decreased before the repair is credited.
 

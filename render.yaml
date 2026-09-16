@@ -20,6 +20,19 @@ services:
       - key: ANTHROPIC_API_KEY
         sync: false
 
+      # OpenHands is installed in the image. Select it only after supplying
+      # a reachable remote model endpoint and credential in Render.
+      - key: HEALER_BACKEND
+        value: "anthropic"
+      - key: OPENHANDS_BIN
+        value: "openhands"
+      - key: LOCAL_LLM_BASE_URL
+        sync: false
+      - key: LOCAL_LLM_MODEL
+        value: "qwen2.5-coder:7b"
+      - key: LOCAL_LLM_API_KEY
+        sync: false
+
       # The dashboard is served from this same service, so requests are
       # same-origin and no cross-origin allowance is needed.
       - key: HEALING_AGENT_CORS_ORIGINS
