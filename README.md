@@ -6,7 +6,6 @@ through a CI/CD-style gate loop, pushes a healed branch, and hands you the link
 — while continuously monitoring the pipeline so it can tell **"your code broke
 the build"** apart from **"the platform is degraded."**
 
-<img width="900" alt="The dashboard mid-run: floating glass panels over an animated node field, live progress, findings, and gate results" src="docs/dashboard.png">
 
 The dashboard uses a dark glass interface with an animated Three.js node field.
 The five workflow controls under the title are clickable: select Detect,
