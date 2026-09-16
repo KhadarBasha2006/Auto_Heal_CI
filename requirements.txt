@@ -1,0 +1,14 @@
+# Root requirements file -- this is what Vercel's Python runtime installs when
+# building the serverless function in api/.
+#
+# Deliberately leaner than backend/requirements.txt: Vercel supplies the ASGI
+# server, so uvicorn is not needed here and would only add weight (and uvloop,
+# which is a compiled dependency) to a bundle that has a size limit.
+#
+# Ranges rather than exact pins -- see backend/requirements.txt for why.
+fastapi>=0.115,<1.0
+pydantic>=2.11,<3.0
+httpx>=0.27,<1.0
+anthropic>=0.42,<1.0
+PyYAML>=6.0,<7.0
+ruff>=0.8,<1.0

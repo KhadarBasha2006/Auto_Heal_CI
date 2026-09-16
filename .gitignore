@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Node
+node_modules/
+dist/
+.vite/
+
+# Env & secrets
+.env
+.env.local
+.env.*.local
+*.pem
+
+# Runtime workspaces (cloned repos land here)
+.workspaces/
+/tmp-workspaces/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/

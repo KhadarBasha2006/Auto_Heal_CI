@@ -1,0 +1,30 @@
+# Vercel's Python runtime statically locates a top-level FastAPI instance
+# named `app`. Ours lives in a package under backend/, which is not one of the
+# locations it scans, so point it there explicitly.
+#
+# With this set there is no api/ function shim and no rewrite: every request
+# reaches FastAPI, which already namespaces its own routes under /api and
+# serves the built dashboard for everything else. That matters because Vercel
+# now routes internal rewrites using the REWRITTEN path -- a
+# "/api/(.*) -> /api/index" rule would hand FastAPI the literal path
+# "/api/index" and 404 every real route.
+[tool.vercel]
+entrypoint = "backend.healing_agent.app:app"
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+exclude = [".workspaces", "frontend", "node_modules", "dist"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP"]
+# E501  - line length is handled by review, not the linter.
+# UP042 - `class X(str, Enum)` is deliberate: it keeps members JSON-serialisable
+#         and comparable to plain strings, which both pydantic and the SSE
+#         payloads rely on. StrEnum would change `str()` output.
+ignore = ["E501", "UP042"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["backend"]
+addopts = "-q"

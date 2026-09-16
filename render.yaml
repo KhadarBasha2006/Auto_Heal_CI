@@ -1,0 +1,39 @@
+# Render Blueprint - one-click deploy of the whole app (dashboard + API) as a
+# single service on a single URL.
+#
+# Deploy: push this repo, then on render.com choose
+# New -> Blueprint -> select this repository.
+services:
+  - type: web
+    name: cicd-healing-agent
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /api/health
+    # Push to the connected branch redeploys. The image rebuilds the frontend,
+    # so a UI change ships with the same push as a backend change.
+    autoDeploy: true
+    envVars:
+      # Set this in the Render dashboard to enable model-generated repairs.
+      # Without it the agent still detects every problem category and applies
+      # the deterministic repair tier.
+      - key: ANTHROPIC_API_KEY
+        sync: false
+
+      # The dashboard is served from this same service, so requests are
+      # same-origin and no cross-origin allowance is needed.
+      - key: HEALING_AGENT_CORS_ORIGINS
+        value: "none"
+
+      # Serverless-style writable path; Render's filesystem is ephemeral.
+      - key: HEALING_AGENT_WORKSPACE
+        value: /tmp/healing-agent-workspaces
+
+      # Leave false on any deployment where you do not control every
+      # repository that gets submitted - enabling it executes their code.
+      - key: HEALING_AGENT_ALLOW_TEST_EXECUTION
+        value: "false"
+
+      # Free instances are small; keep a run bounded.
+      - key: HEALING_AGENT_JOB_TIMEOUT
+        value: "600"

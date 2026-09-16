@@ -1,0 +1,43 @@
+# Keep the build context small and prevent host artifacts leaking into the
+# image. Without this, `COPY frontend/ ./` would carry a local node_modules and
+# a stale dist into the build, and the whole .git history would be uploaded as
+# build context on every deploy.
+
+.git
+.gitignore
+.github
+
+# Node / frontend build artifacts -- the image builds these itself
+node_modules
+**/node_modules
+frontend/dist
+frontend/.vite
+
+# Python caches and virtualenvs
+__pycache__
+**/__pycache__
+*.py[cod]
+.venv
+venv
+.pytest_cache
+.ruff_cache
+.mypy_cache
+
+# Runtime workspaces (cloned repos land here)
+.workspaces
+tmp-workspaces
+
+# Local secrets must never enter an image layer
+.env
+.env.*
+!.env.example
+
+# Docs and media not needed at runtime
+docs
+*.md
+!README.md
+
+# Editor / OS
+.idea
+.vscode
+.DS_Store

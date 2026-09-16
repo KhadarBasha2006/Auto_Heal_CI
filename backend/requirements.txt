@@ -1,0 +1,17 @@
+# Version ranges rather than exact pins: the floors are the minimums this code
+# needs, and the ceilings stop a major release from silently breaking it.
+#
+# Exact pins would be more reproducible but they hard-fail on newer Python.
+# pydantic 2.10 resolves pydantic-core 2.27, which ships no cp314 wheel, so on
+# Python 3.14 pip falls back to a Rust source build that fails on a stock
+# machine. Ranges let pip pick a build that exists for the interpreter in use.
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.34,<1.0
+pydantic>=2.11,<3.0
+httpx>=0.27,<1.0
+anthropic>=0.42,<1.0
+PyYAML>=6.0,<7.0
+ruff>=0.8,<1.0
+
+# Development / test only
+pytest>=8.0,<10.0
