@@ -21,8 +21,10 @@ FROM python:3.12-slim
 # git      - enables the git-CLI repository backend (higher fidelity than the
 #            pure-HTTP fallback)
 # nodejs   - enables JavaScript syntax checking via `node --check`
+# build-essential is needed by OpenHands dependencies such as pylcs when a
+# prebuilt wheel is unavailable for the selected Python/image combination.
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends git ca-certificates nodejs \
+    && apt-get install -y --no-install-recommends git ca-certificates nodejs build-essential \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
