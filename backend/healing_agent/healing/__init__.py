@@ -6,7 +6,6 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ..config import Settings
-from ..models import Fix, Problem
 from ..models import Fix, FixTier, Problem
 from .ai import AiRepairOutcome, apply_ai_fixes, file_parses, public_symbols
 from .deterministic import apply_deterministic_fixes, run_ruff_autofix
